@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ระบบบันทึกข้อมูล</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Tahoma,sans-serif;
+}
+
+body{
+    background:#eef3f8;
+}
+
+.container{
+    width:90%;
+    max-width:1100px;
+    margin:30px auto;
+}
+
+h1{
+    text-align:center;
+    color:#0d6efd;
+    margin-bottom:20px;
+}
+
+.form-box{
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 5px 15px rgba(0,0,0,.15);
+    margin-bottom:20px;
+}
+
+.form-group{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:15px;
+}
+
+input{
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:6px;
+}
+
+button{
+    padding:10px 18px;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+    color:white;
+}
+
+.add{
+    background:#198754;
+}
+
+.delete{
+    background:#dc3545;
+}
+
+.search{
+    margin:20px 0;
+}
+
+#search{
+    width:100%;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+    box-shadow:0 5px 15px rgba(0,0,0,.15);
+}
+
+th{
+    background:#0d6efd;
+    color:white;
+}
+
+th,td{
+    border:1px solid #ddd;
+    padding:12px;
+    text-align:center;
+}
+
+tr:nth-child(even){
+    background:#f8f8f8;
+}
+
+tr:hover{
+    background:#dcecff;
+}
+
+footer{
+    text-align:center;
+    margin-top:20px;
+    color:#666;
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+<h1>📋 ระบบบันทึกข้อมูล</h1>
+
+<div class="form-box">
+
+<div class="form-group">
+
+<input type="text" id="id" placeholder="รหัส">
+
+<input type="text" id="name" placeholder="ชื่อ - นามสกุล">
+
+<input type="text" id="phone" placeholder="เบอร์โทร">
+
+<input type="text" id="address" placeholder="ที่อยู่">
+
+</div>
+
+<br>
+
+<button class="add" onclick="addData()">➕ เพิ่มข้อมูล</button>
+
+</div>
+
+<div class="search">
+<input type="text" id="search" placeholder="🔍 ค้นหาข้อมูล..." onkeyup="searchData()">
+</div>
+
+<table id="myTable">
+
+<thead>
+
+<tr>
+
+<th>รหัส</th>
+<th>ชื่อ-นามสกุล</th>
+<th>เบอร์โทร</th>
+<th>ที่อยู่</th>
+<th>ลบ</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+</tbody>
+
+</table>
+
+<footer>
+
+<p>ตัวอย่างระบบบันทึกข้อมูลด้วย HTML CSS JavaScript</p>
+
+</footer>
+
+</div>
+
+<script>
+
+function addData(){
+
+let id=document.getElementById("id").value;
+let name=document.getElementById("name").value;
+let phone=document.getElementById("phone").value;
+let address=document.getElementById("address").value;
+
+if(id==""||name==""||phone==""||address==""){
+
+alert("กรุณากรอกข้อมูลให้ครบ");
+return;
+
+}
+
+let table=document.getElementById("myTable").getElementsByTagName("tbody")[0];
+
+let row=table.insertRow();
+
+row.insertCell(0).innerHTML=id;
+row.insertCell(1).innerHTML=name;
+row.insertCell(2).innerHTML=phone;
+row.insertCell(3).innerHTML=address;
+
+let cell=row.insertCell(4);
+
+cell.innerHTML="<button class='delete' onclick='deleteRow(this)'>ลบ</button>";
+
+document.getElementById("id").value="";
+document.getElementById("name").value="";
+document.getElementById("phone").value="";
+document.getElementById("address").value="";
+
+}
+
+function deleteRow(btn){
+
+let row=btn.parentNode.parentNode;
+
+row.parentNode.removeChild(row);
+
+}
+
+function searchData(){
+
+let input=document.getElementById("search").value.toUpperCase();
+
+let table=document.getElementById("myTable");
+
+let tr=table.getElementsByTagName("tr");
+
+for(let i=1;i<tr.length;i++){
+
+let td=tr[i].getElementsByTagName("td");
+
+let show=false;
+
+for(let j=0;j<td.length-1;j++){
+
+if(td[j].innerHTML.toUpperCase().indexOf(input)>-1){
+
+show=true;
+
+}
+
+}
+
+tr[i].style.display=show?"":"none";
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
